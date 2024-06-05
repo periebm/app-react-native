@@ -1,4 +1,4 @@
-import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { ParamListBase, useNavigation, useTheme } from '@react-navigation/native';
 import React from 'react';
 import { View, Text } from 'react-native';
 import { styles } from './styles';
@@ -7,10 +7,12 @@ import { NativeStackNavigationProp } from 'react-native-screens/lib/typescript/n
 
 export default function HomeScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-
+  const theme = useTheme();
+  const createdStyles = styles(theme);
+  
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>
+    <View style={createdStyles.container}>
+      <Text style={createdStyles.title}>
         Essa tela só pode ser vista por usuarios autenticados
       </Text>
       <MyButton
@@ -18,7 +20,7 @@ export default function HomeScreen() {
         title={'Ir para Configurações'}
       />
       <Text>
-        by <Text style={styles.coffText}>Péri</Text>
+        by <Text style={createdStyles.coffText}>Péri</Text>
       </Text>
     </View>
   );

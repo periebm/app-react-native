@@ -1,3 +1,4 @@
+import { Theme, useTheme } from '@react-navigation/native';
 import {
   TouchableOpacity,
   TouchableOpacityProps,
@@ -10,22 +11,26 @@ interface MyButtonProps extends TouchableOpacityProps {
 }
 
 export function MyButton({ title, style, ...rest }: MyButtonProps) {
+  const theme = useTheme();
+  const createdStyles = styles(theme);
+
   return (
-    <TouchableOpacity {...rest} style={[styles.button, style]}>
-      <Text style={styles.text}>{title}</Text>
+    <TouchableOpacity {...rest} style={[createdStyles.button, style]}>
+      <Text style={createdStyles.text}>{title}</Text>
     </TouchableOpacity>
   );
 }
 
-const styles = StyleSheet.create({
+export const styles = (theme: Theme) => {
+  return StyleSheet.create({
   text: {
     fontWeight: 'bold',
-    color: '#FFF',
+    color: theme.colors.text,
     fontSize: 16,
   },
   button: {
-    backgroundColor: '#550AB1',
+    backgroundColor: theme.colors.primary,
     borderRadius: 8,
     padding: 20
   },
-});
+})};

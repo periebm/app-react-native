@@ -1,37 +1,58 @@
 import React, { useState } from 'react';
-import { View, Text, Image } from 'react-native';
-import logo from '../assets/elmo.jpg';
+import { View, Image, Text } from 'react-native';
+import logodark from '../assets/logodark.png';
 import MyTextInput from '../components/MyTextInput';
 import { styles } from './styles';
 import { MyButton } from '../components/MyButton';
 import { useAuth } from '../context/Auth';
+import { useTheme } from '@react-navigation/native';
 
 export default function SignInScreen() {
-  const {signIn} = useAuth();
+  const { signIn } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const theme = useTheme();
+  const createdStyles = styles(theme);
 
   return (
     <View
       style={[
-        styles.container,
-        { flex: 1, alignItems: 'center', justifyContent: 'center' },
+        createdStyles.container,
+        { alignItems: 'center', justifyContent: 'center' },
       ]}
     >
-      <Image
-        style={{ width: 100, height: 100 }}
-        resizeMode="contain"
-        source={logo}
+      <View
+        style={{
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginBottom: 30
+        }}
+      >
+        <Image
+          style={{ width: 200, height: 200,  }}
+          resizeMode="center"
+          source={logodark}
+        />
+        <Text 
+        style={{
+          fontSize: 20,
+          fontWeight: 'bold',
+        }}>Peri App</Text>
+      </View>
+      <MyTextInput
+        placeholder="username"
+        value={email}
+        onChangeText={setEmail}
       />
-      <MyTextInput placeholder="e-mail" value={email} onChangeText={setEmail} />
       <MyTextInput
         secureTextEntry
-        placeholder="senha"
+        placeholder="******"
         value={password}
         onChangeText={setPassword}
       />
 
-      <MyButton onPress={() => signIn(email, password)} title="Entrar no App" />
+      <MyButton onPress={() => signIn(email, password)} title="Login" />
     </View>
   );
 }
